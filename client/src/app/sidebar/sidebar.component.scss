@@ -1,0 +1,29 @@
+@import "../../styles/variables";
+
+.sidebar {
+  height: 100vh;
+  background-color: $main-color;
+  color: $bright-font-color;
+  display: block;
+  font-size: $main-font-size;
+  padding-left: 1rem;
+
+  .sidebar__menu-item {
+    color: $bright-font-color;
+    display: block;
+    font-size: $medium-font-size;
+    padding-top: 1rem;
+    text-decoration: none;
+
+    &:hover {
+      color: $hover-color;
+    }
+  }
+
+  .sidebar__header {
+    font-size: $header-font-size;
+    font-weight: bold;
+    color: $bright-font-color;
+    text-decoration: none;
+  }
+}

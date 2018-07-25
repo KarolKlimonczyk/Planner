@@ -1,0 +1,7 @@
+.app-container {
+  height: 100vh; }
+  .app-container .app-container__grid {
+    overflow-y: auto;
+    max-height: 100vh; }
+
+/*# sourceMappingURL=app.component.css.map */
