@@ -21,9 +21,16 @@
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/router": "^6.0.3",
     "@ng-bootstrap/ng-bootstrap": "^2.2.0",
+    "angular-calendar": "^0.25.2",
+    "bootstrap": "^4.0.0",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
+    "jquery": "^3.3.1",
+    "moment": "^2.22.2",
+    "ngx-tempusdominus-bootstrap": "^1.0.0",
     "rxjs": "^6.0.0",
+    "tempusdominus-bootstrap-4": "^5.0.1",
+    "tempusdominus-core": "^5.0.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

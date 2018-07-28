@@ -7,23 +7,27 @@ import {DayViewComponent} from './grid/day-view/day-view.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {RouterModule, Routes} from '@angular/router';
 import {ScheduleGridComponent} from './grid/schedule-grid/schedule-grid.component';
+import {CalendarModule} from "angular-calendar";
+import {GridModule} from "./grid/grid.module";
+import {EventCreatorComponent} from "./grid/event-creator/event-creator.component";
 
 const routes: Routes = [
   {path: '', component: DayViewComponent},
-  {path: "schedule", component: ScheduleGridComponent}
+  {path: "schedule", component: ScheduleGridComponent},
+  {path: "new-event", component: EventCreatorComponent}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    SidebarComponent,
-    DayViewComponent,
-    ScheduleGridComponent
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    CalendarModule.forRoot(),
+    GridModule
   ],
   providers: [],
   bootstrap: [AppComponent]
