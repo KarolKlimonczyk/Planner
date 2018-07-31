@@ -10,6 +10,7 @@ import {ScheduleGridComponent} from './grid/schedule-grid/schedule-grid.componen
 import {CalendarModule} from "angular-calendar";
 import {GridModule} from "./grid/grid.module";
 import {EventCreatorComponent} from "./grid/event-creator/event-creator.component";
+import {SharedModule} from "./shared/shared.module";
 
 const routes: Routes = [
   {path: '', component: DayViewComponent},
@@ -27,7 +28,8 @@ const routes: Routes = [
     NgbModule.forRoot(),
     RouterModule.forRoot(routes),
     CalendarModule.forRoot(),
-    GridModule
+    GridModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

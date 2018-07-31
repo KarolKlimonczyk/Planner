@@ -29,7 +29,7 @@
 
       <div class="form-group row">
         <div class="col-12">
-          <button class="btn btn-primary" type="submit" [disabled]="!newEventForm.valid">Add event</button>
+          <button type="submit" (click)="createNewEvent()" [disabled]="!newEventForm.valid" class="btn btn-primary">Add event</button>
         </div>
       </div>
     </form>

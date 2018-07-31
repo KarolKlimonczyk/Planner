@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {EventService} from "../../../shared/services/EventService";
+import {Event} from "../../../shared/models/Event";
 
 @Component({
   selector: 'pla-new-event-inputs',
@@ -14,7 +16,8 @@ export class NewEventInputsComponent implements OnInit {
     format: "DD.MM.YYYY hh:mm",
   };
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private eventService: EventService,
+              private formBuilder: FormBuilder) {
     const currentDate = new Date();
 
     this.newEventForm = this.formBuilder.group({
@@ -27,4 +30,22 @@ export class NewEventInputsComponent implements OnInit {
   ngOnInit() {
   }
 
+  createNewEvent() {
+    let event = new Event();
+    event.title = this.newEventForm.value.title;
+    event.start = this.newEventForm.value.startDate;
+    event.end = this.newEventForm.value.endDate;
+
+    this.eventService.notifyAboutNewEvent(event);
+
+    // this.eventService.getEventById(1).subscribe(
+    //   event => {
+    //     this.newEventEmitter.emit(event);
+    //     this.eventService.notifyAboutNewEvent(event);
+    //   },
+    //   error => {
+    //     console.error(error);
+    //   }
+    // )
+  }
 }
