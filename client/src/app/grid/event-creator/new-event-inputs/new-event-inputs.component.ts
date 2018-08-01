@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {EventService} from "../../../shared/services/EventService";
 import {Event} from "../../../shared/models/Event";
@@ -36,16 +36,13 @@ export class NewEventInputsComponent implements OnInit {
     event.start = this.newEventForm.value.startDate;
     event.end = this.newEventForm.value.endDate;
 
-    this.eventService.notifyAboutNewEvent(event);
-
-    // this.eventService.getEventById(1).subscribe(
-    //   event => {
-    //     this.newEventEmitter.emit(event);
-    //     this.eventService.notifyAboutNewEvent(event);
-    //   },
-    //   error => {
-    //     console.error(error);
-    //   }
-    // )
+    this.eventService.addNewEvent(event).subscribe(
+      () => {
+        this.eventService.notifyAboutNewEvent(event);
+      },
+      error => {
+        console.error(error);
+      }
+    )
   }
 }
