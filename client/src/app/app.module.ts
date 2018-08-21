@@ -11,6 +11,9 @@ import {CalendarModule} from "angular-calendar";
 import {GridModule} from "./grid/grid.module";
 import {EventCreatorComponent} from "./grid/event-creator/event-creator.component";
 import {SharedModule} from "./shared/shared.module";
+import {LoginComponent} from './login/login.component';
+import {AuthServiceConfig, SocialLoginModule} from "angularx-social-login";
+import {getAuthServiceConfigs} from "./shared/config/SocialAuthConfig";
 
 const routes: Routes = [
   {path: '', component: DayViewComponent},
@@ -21,17 +24,26 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    SidebarComponent
+    SidebarComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
     RouterModule.forRoot(routes),
     CalendarModule.forRoot(),
+    SocialLoginModule,
+
+    //planner modules
     GridModule,
     SharedModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: AuthServiceConfig,
+      useFactory: getAuthServiceConfigs
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
