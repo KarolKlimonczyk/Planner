@@ -1,0 +1,38 @@
+@import "../../styles/variables";
+
+.login {
+  height: 100vh;
+  background-color: $login-background-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .login__form {
+    display: inline-flex;
+
+    .login__welcome-label {
+      font-size: 5rem;
+      font-style: italic;
+      color: $bright-font-color;
+      border-right: $bright-font-color 0.2rem solid;
+      padding-right: 2rem;
+
+      .login__welcome-label--small {
+        font-size: 2rem;
+        font-weight: normal;
+      }
+    }
+
+    .login__button {
+      font-size: 3rem;
+      cursor: pointer;
+      padding-left: 2rem;
+      display: flex;
+      align-items: center;
+
+      span {
+        padding-left: 1rem;
+      }
+    }
+  }
+}

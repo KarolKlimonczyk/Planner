@@ -1,5 +1,4 @@
 create table User (
-  username varchar(256),
-  password varchar(256),
-  enabled boolean
+  id varchar(30) NOT NULL,
+  name varchar(256)
 );

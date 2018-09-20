@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {AuthService as SocialAuthService, FacebookLoginProvider} from "angularx-social-login";
 import {AuthService} from "../shared/services/AuthService";
 import {Subscription} from "rxjs/index";
@@ -8,33 +8,26 @@ import {Subscription} from "rxjs/index";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnDestroy {
 
-  private loginSubscriber: Subscription;
-  private loggedUserSubscriber: Subscription;
+  private loginSubscription: Subscription = new Subscription();
 
   constructor(private authService: AuthService, private socialAuthService: SocialAuthService) {
   }
 
-  ngOnInit() {
-  }
-
-  login() {
+  signIn() {
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
       (user) => {
-        this.loginSubscriber = this.authService.sendAuthToken(user.authToken).subscribe();
+        this.loginSubscription = this.authService.sendAuthToken(user.authToken);
       }
     );
   }
 
   getLoggedUser() {
-    this.loggedUserSubscriber = this.authService.getLoggedUser().subscribe(
-      user => console.log(user)
-    );
+    return this.authService.getLoggedUser();
   }
 
   ngOnDestroy(): void {
-    this.loggedUserSubscriber.unsubscribe();
-    this.loginSubscriber.unsubscribe();
+    this.loginSubscription.unsubscribe();
   }
 }

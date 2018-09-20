@@ -1,2 +1,13 @@
-<button type="submit" (click)="login()" class="btn btn-primary">Add event</button>
-<button type="submit" (click)="getLoggedUser()" class="btn btn-primary">Get user</button>
+<div class="login">
+  <div class="login__form">
+    <div class="login__welcome-label">
+      Planner App!
+      <div class="login__welcome-label--small">
+        Make your life simpler.
+      </div>
+    </div>
+    <div class="login__button" (click)="signIn()">
+      <i class="fab fa-facebook fa-lg"></i> <span>Sign in</span>
+    </div>
+  </div>
+</div>

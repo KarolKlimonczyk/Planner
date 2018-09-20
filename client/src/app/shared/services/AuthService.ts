@@ -1,17 +1,21 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/index";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Router} from "@angular/router";
+import {User} from "../models/User";
 
 const USER_API = "/api/user/";
 
 @Injectable()
 export class AuthService {
 
-  constructor(private http: HttpClient) {
+  private loggedUser: User;
+
+  constructor(private http: HttpClient, private router: Router) {
   }
 
-  public getLoggedUser(): Observable<any> {
-    return this.http.get<any>(USER_API + "logged");
+  public getLoggedUserFromServer(): Observable<User> {
+    return this.http.get<User>(USER_API + "logged");
   }
 
   public sendAuthToken(authToken) {
@@ -20,6 +24,35 @@ export class AuthService {
       'oauth_token': authToken
     });
     let options = {headers: headers};
-    return this.http.post("/api/login/facebook", null, options);
+
+    return this.http.post("/api/login/facebook", null, options).subscribe(
+      () => {
+        this.getLoggedUserFromServer().subscribe(
+          user => {
+            this.saveUserAndRedirectToHome(user);
+          },
+          error => {
+            console.error("Cannot obtain logged user!", error)
+          }
+        )
+      },
+      error => {
+        console.error("Cannot sign in!", error);
+      }
+    );
+  }
+
+  public getLoggedUser(): User {
+    return this.loggedUser;
+  }
+
+  public isAuthenticated() {
+    return !!this.loggedUser;
+  }
+
+  public saveUserAndRedirectToHome(user: User) {
+    this.loggedUser = user;
+    sessionStorage.setItem("userName", user.name);
+    this.router.navigate(['/']);
   }
 }

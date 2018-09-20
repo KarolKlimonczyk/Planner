@@ -11,33 +11,38 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.core.Authentication
 import org.springframework.security.oauth2.client.OAuth2ClientContext
 import org.springframework.security.oauth2.client.OAuth2RestTemplate
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import java.util.*
 import javax.servlet.Filter
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+
 
 @EnableOAuth2Client
-@EnableAuthorizationServer
 @Configuration
 @Order(SecurityProperties.IGNORED_ORDER)
 class SecurityConfig @Autowired constructor(private val oAuth2ClientContext: OAuth2ClientContext) : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         // @formatter:off
-        http.antMatcher("/**")
+        http.httpBasic().disable()
+                .cors().and()
+                .antMatcher("/**")
                 .authorizeRequests()
-                    .antMatchers("/", "/api/login/facebook")
+                    .antMatchers("/api/login/facebook")
                         .permitAll()
                             .anyRequest()
                                 .authenticated()
-                .and()
-                    .logout()
-                        .logoutSuccessUrl("/")
-                            .permitAll()
                 .and()
                     .csrf()
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
@@ -57,7 +62,20 @@ class SecurityConfig @Autowired constructor(private val oAuth2ClientContext: OAu
         val tokenServices = UserInfoTokenServices(clientResources.resource.userInfoUri, clientResources.client.clientId)
         tokenServices.setRestTemplate(oAuth2RestTemplate)
         oAuth2ClientAuthenticationFilter.setTokenServices(tokenServices)
+        oAuth2ClientAuthenticationFilter.setAuthenticationSuccessHandler(CustomAuthenticationSuccessHandler())
         return oAuth2ClientAuthenticationFilter
+    }
+
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val configuration = CorsConfiguration()
+        configuration.allowedOrigins = Arrays.asList("*")
+        configuration.allowedMethods = Arrays.asList("GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH")
+        configuration.allowedHeaders = Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization", "oauth_token", "x-xsrf-token")
+        configuration.allowCredentials = true
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
     }
 }
 
@@ -68,4 +86,10 @@ class ClientResources {
 
     @NestedConfigurationProperty
     val resource = ResourceServerProperties()
+}
+
+class CustomAuthenticationSuccessHandler : SimpleUrlAuthenticationSuccessHandler() {
+    override fun onAuthenticationSuccess(request: HttpServletRequest, response: HttpServletResponse, authentication: Authentication) {
+        //nothing to do, status will be returned
+    }
 }

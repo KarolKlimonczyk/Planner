@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {EventService} from "./services/EventService";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthService} from "./services/AuthService";
+import {AuthGuard} from "./config/AuthGuard";
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import {AuthService} from "./services/AuthService";
   ],
   providers: [
     EventService,
-    AuthService
+    AuthService,
+    AuthGuard
   ],
 })
 export class SharedModule {

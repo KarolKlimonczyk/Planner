@@ -11,7 +11,9 @@ class FacebookOAuth2ClientAuthenticationProcessingFilter(private val oauth2Clien
 
     override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse): Authentication {
         val token = request.getHeader("oauth_token")
-        this.oauth2ClientContext.accessToken = DefaultOAuth2AccessToken(token)
+        if (!token.isNullOrEmpty()) {
+            this.oauth2ClientContext.accessToken = DefaultOAuth2AccessToken(token)
+        }
         return super.attemptAuthentication(request, response)
     }
 }
