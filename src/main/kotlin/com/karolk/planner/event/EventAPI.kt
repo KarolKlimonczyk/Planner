@@ -2,18 +2,18 @@ package com.karolk.planner.event
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/event")
-class EventAPI {
+class EventAPI(private val eventService: EventService) {
 
     @GetMapping(value = ["/{id}"])
-    fun getEvent(@PathVariable id: Long): Event {
-        return Event()
-    }
+    fun getEvent(@PathVariable id: Long) = this.eventService.findById(id)
 
     @PostMapping(value = ["/add"])
-    fun addEvent(@RequestBody event: Event): ResponseEntity<Unit>{
+    fun addEvent(@RequestBody @Valid event: Event): ResponseEntity<Unit> {
+        this.eventService.save(event)
         return ResponseEntity.ok().build()
     }
 }

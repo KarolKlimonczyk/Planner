@@ -1,0 +1,77 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: Create User table
+      author: KarolK
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  type: varchar(30)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(256)
+
+  - changeSet:
+      id: Create Event table
+      author: KarolK
+      changes:
+        - createTable:
+            tableName: event
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(300)
+              - column:
+                  name: start
+                  type: datetime
+                  defaultValueComputed: "CURRENT_TIMESTAMP"
+              - column:
+                  name: end
+                  type: datetime
+                  defaultValueComputed: "CURRENT_TIMESTAMP"
+
+  - changeSet:
+      id: Create Event_User table
+      author: KarolK
+      changes:
+        - createTable:
+            tableName: event_user
+            columns:
+              - column:
+                  name: event_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            columnNames: event_id, user_id
+            tableName: event_user
+        - addForeignKeyConstraint:
+            baseColumnNames: event_id
+            baseTableName: event_user
+            constraintName: event_user_fk
+            referencedColumnNames: id
+            referencedTableName: event
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: event_user
+            constraintName: user_event_fk
+            referencedColumnNames: id
+            referencedTableName: user

@@ -1,10 +1,9 @@
 package com.karolk.planner.user
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
+import com.karolk.planner.event.Event
+import javax.persistence.*
 
-@Entity(name = "User")
+@Entity(name = "user")
 data class User(
         @Id
         @Column(name = "id")
@@ -12,4 +11,8 @@ data class User(
         val id: String,
 
         @Column(name = "name")
-        val name: String)
+        val name: String,
+
+        @ManyToMany(mappedBy = "users")
+        val events: List<Event>
+)

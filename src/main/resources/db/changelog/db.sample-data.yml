@@ -1,0 +1,26 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: Insert sample user
+      author: KarolK
+      changes:
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  value: '1'
+              - column:
+                  name: name
+                  value: "John Smith"
+
+  - changeSet:
+      id: Insert sample event
+      author: KarolK
+      changes:
+        - insert:
+            tableName: event
+            columns:
+              - column:
+                  name: title
+                  value: "I'ts my daily event"

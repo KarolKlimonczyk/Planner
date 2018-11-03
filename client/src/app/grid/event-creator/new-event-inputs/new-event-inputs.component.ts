@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {EventService} from "../../../shared/services/EventService";
 import {Event} from "../../../shared/models/Event";
+import {AuthService} from "../../../shared/services/AuthService";
 
 @Component({
   selector: 'pla-new-event-inputs',
@@ -17,6 +18,7 @@ export class NewEventInputsComponent implements OnInit {
   };
 
   constructor(private eventService: EventService,
+              private authService: AuthService,
               private formBuilder: FormBuilder) {
     const currentDate = new Date();
 
@@ -35,6 +37,7 @@ export class NewEventInputsComponent implements OnInit {
     event.title = this.newEventForm.value.title;
     event.start = this.newEventForm.value.startDate;
     event.end = this.newEventForm.value.endDate;
+    event.users = [this.authService.getLoggedUser()];
 
     this.eventService.addNewEvent(event).subscribe(
       () => {
