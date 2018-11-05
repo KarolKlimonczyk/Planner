@@ -10,6 +10,7 @@ import { NewEventInputsComponent } from './event-creator/new-event-inputs/new-ev
 import { NewEventDayViewComponent } from './event-creator/new-event-day-view/new-event-day-view.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgTempusdominusBootstrapModule} from "ngx-tempusdominus-bootstrap";
+import {ColorPickerModule} from "ngx-color-picker";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {NgTempusdominusBootstrapModule} from "ngx-tempusdominus-bootstrap";
     CalendarModule,
     FormsModule,
     ReactiveFormsModule,
-    NgTempusdominusBootstrapModule
+    NgTempusdominusBootstrapModule,
+    ColorPickerModule
   ],
   providers: [],
 })

@@ -39,7 +39,7 @@ export class NewEventDayViewComponent implements OnInit, OnDestroy {
       (event: Event) => {
         const calendarEvent = {
           title: event.title,
-          color: colors.red,
+          color: {primary: event.color, secondary: event.color},
           start: event.start,
           end: event.end
         };

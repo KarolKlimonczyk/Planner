@@ -28,5 +28,8 @@ data class Event(
                 joinColumns = [JoinColumn(name = "event_id")],
                 inverseJoinColumns = [JoinColumn(name = "user_id")]
         )
-        val users: List<User>
+        val users: List<User>,
+
+        @Column(name = "color")
+        val color: String
 )

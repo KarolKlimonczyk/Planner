@@ -16,6 +16,9 @@ databaseChangeLog:
               - column:
                   name: name
                   type: varchar(256)
+      rollback:
+        - dropTable:
+            tableName:  user
 
   - changeSet:
       id: Create Event table
@@ -42,6 +45,9 @@ databaseChangeLog:
                   name: end
                   type: datetime
                   defaultValueComputed: "CURRENT_TIMESTAMP"
+      rollback:
+        - dropTable:
+            tableName:  event
 
   - changeSet:
       id: Create Event_User table
@@ -75,3 +81,18 @@ databaseChangeLog:
             constraintName: user_event_fk
             referencedColumnNames: id
             referencedTableName: user
+
+  - changeSet:
+      id: Add color column to event table
+      author: KarolK
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: color
+                  type: varchar(7)
+            tableName: event
+      rollback:
+        - dropColumn:
+            columnName: color
+            tableName:  event
