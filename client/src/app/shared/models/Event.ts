@@ -11,11 +11,13 @@ export class Event {
   draggable: boolean;
 
 
-  constructor(title: string, start: Date, end: Date, users: Array<User>, color: string) {
+  constructor(title: string, start: Date, end: Date, users: Array<User>, color: string, allDay: boolean, draggable: boolean) {
     this.title = title;
     this.start = start;
     this.end = end;
     this.users = users;
     this.color = color;
+    this.allDay = allDay;
+    this.draggable = draggable;
   }
 }

@@ -6,11 +6,12 @@ import {EventCreatorComponent} from "./event-creator/event-creator.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {RouterModule} from "@angular/router";
 import {CalendarModule} from "angular-calendar";
-import { NewEventInputsComponent } from './event-creator/new-event-inputs/new-event-inputs.component';
-import { NewEventDayViewComponent } from './event-creator/new-event-day-view/new-event-day-view.component';
+import {NewEventInputsComponent} from './event-creator/new-event-inputs/new-event-inputs.component';
+import {NewEventDayViewComponent} from './event-creator/new-event-day-view/new-event-day-view.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgTempusdominusBootstrapModule} from "ngx-tempusdominus-bootstrap";
 import {ColorPickerModule} from "ngx-color-picker";
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {ColorPickerModule} from "ngx-color-picker";
     FormsModule,
     ReactiveFormsModule,
     NgTempusdominusBootstrapModule,
-    ColorPickerModule
+    ColorPickerModule,
+    SharedModule
   ],
   providers: [],
 })

@@ -13,6 +13,6 @@ data class User(
         @Column(name = "name")
         val name: String,
 
-        @ManyToMany(mappedBy = "users")
+        @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
         val events: List<Event>
 )

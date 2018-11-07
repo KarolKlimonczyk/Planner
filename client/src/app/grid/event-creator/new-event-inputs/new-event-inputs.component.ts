@@ -30,7 +30,9 @@ export class NewEventInputsComponent implements OnDestroy {
     this.newEventForm = this.formBuilder.group({
       title: ['', Validators.required],
       startDate: [startDate, Validators.required],
-      endDate: [endDate, Validators.required]
+      endDate: [endDate, Validators.required],
+      allDayEvent: [false],
+      draggable: [false]
     });
   }
 
@@ -46,7 +48,9 @@ export class NewEventInputsComponent implements OnDestroy {
       this.newEventForm.value.startDate,
       this.newEventForm.value.endDate,
       [this.authService.getLoggedUser()],
-      this.color
+      this.color,
+      this.newEventForm.value.allDayEvent,
+      this.newEventForm.value.draggable
     );
 
     this.eventSubscription = this.eventService.addNewEvent(event).subscribe(
@@ -54,7 +58,7 @@ export class NewEventInputsComponent implements OnDestroy {
         this.eventService.notifyAboutNewEvent(event);
       },
       error => {
-        console.error(error);
+        console.error("Cannot create new event", error);
       }
     )
   }

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
 import {colors} from "../../day-view/colors";
 import {CalendarEvent} from "angular-calendar";
 import {Event} from "../../../shared/models/Event";
@@ -11,12 +11,16 @@ import {Subject, Subscription} from "rxjs/index";
   styleUrls: ['./new-event-day-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewEventDayViewComponent implements OnInit, OnDestroy {
+export class NewEventDayViewComponent implements OnDestroy {
 
   private newEventSubscription: Subscription;
   refreshCalendar: Subject<any> = new Subject();
 
-  viewDate: Date = new Date();
+  viewDate = new Date();
+
+  calendarOptions = {
+    format: "DD.MM.YYYY",
+  };
 
   events: CalendarEvent[] = [
     {
@@ -24,13 +28,7 @@ export class NewEventDayViewComponent implements OnInit, OnDestroy {
       color: colors.yellow,
       start: new Date(),
       allDay: true
-    },
-    // {
-    //   title: 'A non all day event',
-    //   color: colors.blue,
-    //   start: new Date(),
-    //   draggable: true
-    // }
+    }
   ];
 
   constructor(private eventService: EventService,) {
@@ -41,7 +39,9 @@ export class NewEventDayViewComponent implements OnInit, OnDestroy {
           title: event.title,
           color: {primary: event.color, secondary: event.color},
           start: event.start,
-          end: event.end
+          end: event.end,
+          allDay: event.allDay,
+          draggable: event.draggable
         };
 
         this.events.push(calendarEvent);
@@ -50,10 +50,14 @@ export class NewEventDayViewComponent implements OnInit, OnDestroy {
     )
   }
 
-  ngOnInit() {
-  }
-
   ngOnDestroy(): void {
     this.newEventSubscription.unsubscribe();
+  }
+
+  updateViewDate(date: string) {
+    //for creating new date from string, we need 'yyyy-MM-dd' format
+    //so let's split 'dd.MM.yyyy' format by comma, reverse and then join
+    this.viewDate = new Date(date.split('.').reverse().join('-'));
+    this.refreshCalendar.next();
   }
 }

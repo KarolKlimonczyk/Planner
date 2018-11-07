@@ -1,5 +1,13 @@
-.new-event-inputs{
+.new-event-inputs {
   h1 {
     border-bottom: black 0.2rem dotted;
+  }
+
+  input[type=checkbox] {
+    height: 40px;
+  }
+
+  .pla-color-picker {
+    cursor: pointer;
   }
 }

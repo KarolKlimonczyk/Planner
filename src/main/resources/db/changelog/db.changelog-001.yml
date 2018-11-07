@@ -83,7 +83,7 @@ databaseChangeLog:
             referencedTableName: user
 
   - changeSet:
-      id: Add color column to event table
+      id: Add color, allDay, draggable columns to event table
       author: KarolK
       changes:
         - addColumn:
@@ -92,7 +92,25 @@ databaseChangeLog:
                   name: color
                   type: varchar(7)
             tableName: event
+        - addColumn:
+            columns:
+              - column:
+                  name: all_day
+                  type: boolean
+            tableName: event
+        - addColumn:
+            columns:
+              - column:
+                  name: draggable
+                  type: boolean
+            tableName: event
       rollback:
         - dropColumn:
             columnName: color
+            tableName:  event
+        - dropColumn:
+            columnName: all_day
+            tableName:  event
+        - dropColumn:
+            columnName: draggable
             tableName:  event

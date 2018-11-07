@@ -22,7 +22,7 @@ data class Event(
         @Column(name = "end")
         val end: LocalDateTime,
 
-        @ManyToMany()
+        @ManyToMany(fetch = FetchType.LAZY)
         @JoinTable(
                 name = "event_user",
                 joinColumns = [JoinColumn(name = "event_id")],
@@ -31,5 +31,11 @@ data class Event(
         val users: List<User>,
 
         @Column(name = "color")
-        val color: String
+        val color: String,
+
+        @Column(name = "all_day")
+        val allDay: Boolean,
+
+        @Column(name = "draggable")
+        val draggable: Boolean
 )

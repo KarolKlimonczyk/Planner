@@ -15,7 +15,8 @@
         <label for="start-date" class="col-form-label col-2">Start date: </label>
         <div class="col-10">
           <input NgTempusdominusBootstrapInput id="start-date" formControlName="startDate" [options]="options"
-                 [placeholder]="'Start date'" class="form-control" autocomplete="off">
+                 [placeholder]="'Start date'" class="form-control" [readonly]="newEventForm.value.allDayEvent"
+                 autocomplete="off">
         </div>
       </div>
 
@@ -23,20 +24,37 @@
         <label for="end-date" class="col-form-label col-2">End date: </label>
         <div class="col-10">
           <input NgTempusdominusBootstrapInput id="end-date" formControlName="endDate" [options]="options"
-                 [placeholder]="'End date'" class="form-control" autocomplete="off">
+                 [placeholder]="'End date'" class="form-control" [readonly]="newEventForm.value.allDayEvent"
+                 autocomplete="off">
         </div>
       </div>
 
       <div class="form-group row">
         <label for="event-color" class="col-form-label col-2">Color: </label>
         <div class="col-10">
-          <input id="event-color" class="form-control" [(colorPicker)]="color" [style.background]="color">
+          <input id="event-color" class="form-control pla-color-picker" [(colorPicker)]="color" [style.background]="color" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="all-day" class="col-form-label col-2">All day: </label>
+        <div class="col-1">
+          <input id="all-day" formControlName="allDayEvent" class="form-check" type="checkbox">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="draggable" class="col-form-label col-2">Draggable: </label>
+        <div class="col-1">
+          <input id="draggable" formControlName="draggable" class="form-check" type="checkbox">
         </div>
       </div>
 
       <div class="form-group row">
         <div class="col-12">
-          <button type="submit" (click)="createNewEvent()" [disabled]="!newEventForm.valid" class="btn btn-primary">Add event</button>
+          <button type="submit" (click)="createNewEvent()" [disabled]="!newEventForm.valid" class="btn btn-primary">
+            Add event
+          </button>
         </div>
       </div>
     </form>

@@ -1,3 +1,8 @@
+<div>
+  <input NgTempusdominusBootstrapInput class="form-control" autocomplete="off" [options]="calendarOptions"
+         (focusout)="updateViewDate($event.target.value)" [value]="viewDate | dateFormat">
+</div>
+
 <mwl-calendar-day-view
   [viewDate]="viewDate"
   [events]="events"
