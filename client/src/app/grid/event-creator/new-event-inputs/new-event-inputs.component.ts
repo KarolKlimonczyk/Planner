@@ -34,6 +34,13 @@ export class NewEventInputsComponent implements OnDestroy {
       allDayEvent: [false],
       draggable: [false]
     });
+
+    this.eventService.dayViewChange$.subscribe(
+      date => {
+        this.newEventForm.controls['startDate'].setValue(date);
+        this.newEventForm.controls['endDate'].setValue(date);
+      }
+    )
   }
 
   ngOnDestroy(): void {

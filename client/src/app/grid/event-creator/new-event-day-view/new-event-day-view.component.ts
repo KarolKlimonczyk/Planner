@@ -59,5 +59,16 @@ export class NewEventDayViewComponent implements OnDestroy {
     //so let's split 'dd.MM.yyyy' format by comma, reverse and then join
     this.viewDate = new Date(date.split('.').reverse().join('-'));
     this.refreshCalendar.next();
+    this.eventService.notifyAboutDayViewChanges(this.viewDate);
+  }
+
+  changeDay(daysToAdd) {
+    let tempDate = new Date();
+    tempDate.setDate(this.viewDate.getDate() + daysToAdd);
+
+    //reassign date due to update input value
+    this.viewDate = tempDate;
+    this.refreshCalendar.next();
+    this.eventService.notifyAboutDayViewChanges(this.viewDate);
   }
 }

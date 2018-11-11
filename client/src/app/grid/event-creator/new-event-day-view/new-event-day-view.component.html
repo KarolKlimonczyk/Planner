@@ -1,6 +1,19 @@
-<div>
-  <input NgTempusdominusBootstrapInput class="form-control" autocomplete="off" [options]="calendarOptions"
-         (focusout)="updateViewDate($event.target.value)" [value]="viewDate | dateFormat">
+<div class="form-group row calendar-input">
+  <div class="col-4 calendar-input__arrow" (click)="changeDay(-1);">
+    <i class="fas fa-angle-left fa-2x float-right"></i>
+  </div>
+  <div class="input-group date col-4" data-target-input="nearest" NgTempusdominusBootstrap>
+    <input class="form-control" (focusout)="updateViewDate($event.target.value)" [value]="viewDate | dateFormat"
+           autocomplete="off" [options]="calendarOptions" NgTempusdominusBootstrapInput type="text"/>
+    <div class="input-group-append" NgTempusdominusBootstrapToggle (focusout)="updateViewDate($event.target.value)">
+      <div class="input-group-text"><i class="fa fa-calendar"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-4 calendar-input__arrow" (click)="changeDay(1);">
+    <i class="fas fa-angle-right fa-2x"></i>
+  </div>
 </div>
 
 <mwl-calendar-day-view

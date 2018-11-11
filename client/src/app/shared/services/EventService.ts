@@ -17,11 +17,18 @@ export class EventService {
   private newEvent = new Subject<Event>();
   newEvent$ = this.newEvent.asObservable();
 
+  private dayViewChange = new Subject<Date>();
+  dayViewChange$ = this.dayViewChange.asObservable();
+
   constructor(private http: HttpClient) {
   }
 
   public notifyAboutNewEvent(event: Event) {
     this.newEvent.next(event);
+  }
+
+  public notifyAboutDayViewChanges(date: Date) {
+    this.dayViewChange.next(date);
   }
 
   public getEventById(id: number): Observable<Event> {
