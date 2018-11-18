@@ -12,9 +12,9 @@ import {Subscription} from "rxjs/index";
 })
 export class NewEventInputsComponent implements OnDestroy {
 
-  newEventForm: FormGroup;
-  color = "#2889e9";
-  options = {
+  private newEventForm: FormGroup;
+  private color = "#2889e9";
+  private options = {
     format: "DD.MM.YYYY hh:mm",
   };
 

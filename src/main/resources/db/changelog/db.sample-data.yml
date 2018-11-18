@@ -23,4 +23,31 @@ databaseChangeLog:
             columns:
               - column:
                   name: title
-                  value: "I'ts my daily event"
+                  value: "I'ts my default event"
+              - column:
+                  name: color
+                  value: "#1ba01b"
+        - insert:
+            tableName: event
+            columns:
+              - column:
+                  name: title
+                  value: "I'ts my all day event"
+              - column:
+                  name: all_day
+                  value: true
+        - insert:
+            tableName: event
+            columns:
+              - column:
+                  name: title
+                  value: "It's a next day event"
+              - column:
+                  name: start
+                  valueComputed: "DATEADD('DAY', 1, CURRENT_TIMESTAMP)"
+              - column:
+                  name: end
+                  valueComputed: "DATEADD('HOUR', 2, DATEADD('DAY', 1, CURRENT_TIMESTAMP))"
+              - column:
+                  name: color
+                  value: "#A01B1B"

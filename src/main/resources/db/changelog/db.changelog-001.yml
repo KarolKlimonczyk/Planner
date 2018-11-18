@@ -44,7 +44,7 @@ databaseChangeLog:
               - column:
                   name: end
                   type: datetime
-                  defaultValueComputed: "CURRENT_TIMESTAMP"
+                  defaultValueComputed: "DATEADD('HOUR', 2, CURRENT_TIMESTAMP)"
       rollback:
         - dropTable:
             tableName:  event
@@ -97,12 +97,14 @@ databaseChangeLog:
               - column:
                   name: all_day
                   type: boolean
+                  defaultValueBoolean: false
             tableName: event
         - addColumn:
             columns:
               - column:
                   name: draggable
                   type: boolean
+                  defaultValueBoolean: false
             tableName: event
       rollback:
         - dropColumn:
