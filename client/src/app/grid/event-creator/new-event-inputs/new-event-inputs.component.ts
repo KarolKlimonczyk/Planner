@@ -1,8 +1,8 @@
 import {Component, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {EventService} from "../../../shared/services/EventService";
-import {Event} from "../../../shared/models/Event";
-import {AuthService} from "../../../shared/services/AuthService";
+import {EventService} from "../../../shared/services/event-service";
+import {Event} from "../../../shared/models/event";
+import {AuthService} from "../../../shared/services/auth-service";
 import {Subscription} from "rxjs/index";
 
 @Component({
@@ -38,7 +38,9 @@ export class NewEventInputsComponent implements OnDestroy {
     this.eventService.dayViewChange$.subscribe(
       date => {
         this.newEventForm.controls['startDate'].setValue(date);
-        this.newEventForm.controls['endDate'].setValue(date);
+        let endDate = date;
+        endDate.setHours(date.getHours() + 1);
+        this.newEventForm.controls['endDate'].setValue(endDate);
       }
     )
   }

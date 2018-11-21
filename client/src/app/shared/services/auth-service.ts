@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/index";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {User} from "../models/User";
+import {User} from "../models/user";
 
 const USER_API = "/api/user/";
 

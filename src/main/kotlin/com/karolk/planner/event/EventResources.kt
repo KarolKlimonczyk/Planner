@@ -6,7 +6,7 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/event")
-class EventAPI(private val eventService: EventService) {
+class EventResources(private val eventService: EventService) {
 
     @GetMapping(value = ["/{id}"])
     fun getEvent(@PathVariable id: Long) = this.eventService.findById(id)

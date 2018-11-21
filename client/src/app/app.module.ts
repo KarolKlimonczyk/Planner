@@ -12,8 +12,8 @@ import {EventCreatorComponent} from "./grid/event-creator/event-creator.componen
 import {SharedModule} from "./shared/shared.module";
 import {LoginComponent} from './login/login.component';
 import {AuthServiceConfig, SocialLoginModule} from "angularx-social-login";
-import {getAuthServiceConfigs} from "./shared/config/SocialAuthConfig";
-import {AuthGuard} from "./shared/config/AuthGuard";
+import {getAuthServiceConfigs} from "./shared/config/social-auth-config";
+import {AuthGuard} from "./shared/config/auth-guard";
 import {HomeComponent} from './home/home.component';
 
 const routes: Routes = [

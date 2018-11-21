@@ -8,4 +8,6 @@ class EventService(private val eventRepository: EventRepository) {
     fun save(event: Event) = this.eventRepository.save(event)
 
     fun findById(id: Long) = this.eventRepository.findById(id)
+
+    fun findAll(): List<Event> = this.eventRepository.findAll()
 }

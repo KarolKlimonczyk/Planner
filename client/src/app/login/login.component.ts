@@ -1,6 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
 import {AuthService as SocialAuthService, FacebookLoginProvider} from "angularx-social-login";
-import {AuthService} from "../shared/services/AuthService";
+import {AuthService} from "../shared/services/auth-service";
 import {Subscription} from "rxjs/index";
 
 @Component({

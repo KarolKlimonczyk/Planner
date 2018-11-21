@@ -1,9 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
-import {colors} from "../../day-view/colors";
-import {CalendarEvent} from "angular-calendar";
-import {Event} from "../../../shared/models/Event";
-import {EventService} from "../../../shared/services/EventService";
+import {Event} from "../../../shared/models/event";
+import {EventService} from "../../../shared/services/event-service";
 import {Subject, Subscription} from "rxjs/index";
+import {AuthService} from "../../../shared/services/auth-service";
 
 @Component({
   selector: 'pla-new-event-day-view',
@@ -22,32 +21,22 @@ export class NewEventDayViewComponent implements OnDestroy {
     format: "DD.MM.YYYY",
   };
 
-  events: CalendarEvent[] = [
-    {
-      title: 'An all day event',
-      color: colors.yellow,
-      start: new Date(),
-      allDay: true
-    }
-  ];
+  events = [];
 
-  constructor(private eventService: EventService,) {
+  constructor(private eventService: EventService, private authService: AuthService) {
 
     this.newEventSubscription = this.eventService.newEvent$.subscribe(
       (event: Event) => {
-        const calendarEvent = {
-          title: event.title,
-          color: {primary: event.color, secondary: event.color},
-          start: event.start,
-          end: event.end,
-          allDay: event.allDay,
-          draggable: event.draggable
-        };
-
+        const calendarEvent = this.eventService.mapEventToCalendarEvent(event);
         this.events.push(calendarEvent);
         this.refreshCalendar.next();
       }
-    )
+    );
+
+    this.authService.getLoggedUser().events.forEach((event) => {
+      this.events.push(this.eventService.mapEventToCalendarEvent(event));
+    });
+
   }
 
   ngOnDestroy(): void {
