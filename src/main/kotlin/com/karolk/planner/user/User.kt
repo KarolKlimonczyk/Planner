@@ -1,6 +1,7 @@
 package com.karolk.planner.user
 
 import com.karolk.planner.event.Event
+import org.codehaus.jackson.annotate.JsonManagedReference
 import javax.persistence.*
 
 @Entity(name = "user")
@@ -13,6 +14,7 @@ data class User(
         @Column(name = "name")
         val name: String,
 
+        @JsonManagedReference
         @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
         val events: List<Event>
 )

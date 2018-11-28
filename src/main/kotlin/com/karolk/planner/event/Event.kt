@@ -1,5 +1,6 @@
 package com.karolk.planner.event
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.karolk.planner.user.User
 import java.time.LocalDateTime
 import javax.persistence.*
@@ -22,6 +23,7 @@ data class Event(
         @Column(name = "end")
         val end: LocalDateTime,
 
+        @JsonBackReference
         @ManyToMany(fetch = FetchType.LAZY)
         @JoinTable(
                 name = "event_user",

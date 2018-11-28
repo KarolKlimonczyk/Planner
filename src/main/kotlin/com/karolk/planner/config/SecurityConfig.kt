@@ -41,8 +41,8 @@ class SecurityConfig @Autowired constructor(private val oAuth2ClientContext: OAu
                 .authorizeRequests()
                     .antMatchers("/api/login/facebook")
                         .permitAll()
-                            .anyRequest()
-                                .authenticated()
+                     .anyRequest()
+                        .authenticated()
                 .and()
                     .csrf()
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
@@ -61,21 +61,23 @@ class SecurityConfig @Autowired constructor(private val oAuth2ClientContext: OAu
         oAuth2ClientAuthenticationFilter.restTemplate = oAuth2RestTemplate
         val tokenServices = UserInfoTokenServices(clientResources.resource.userInfoUri, clientResources.client.clientId)
         tokenServices.setRestTemplate(oAuth2RestTemplate)
-        oAuth2ClientAuthenticationFilter.setTokenServices(tokenServices)
-        oAuth2ClientAuthenticationFilter.setAuthenticationSuccessHandler(CustomAuthenticationSuccessHandler())
-        return oAuth2ClientAuthenticationFilter
+        return oAuth2ClientAuthenticationFilter.apply {
+            setTokenServices(tokenServices)
+            setAuthenticationSuccessHandler(CustomAuthenticationSuccessHandler())
+        }
     }
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
-        val configuration = CorsConfiguration()
-        configuration.allowedOrigins = Arrays.asList("*")
-        configuration.allowedMethods = Arrays.asList("GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH")
-        configuration.allowedHeaders = Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization", "oauth_token", "x-xsrf-token")
-        configuration.allowCredentials = true
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", configuration)
-        return source
+        val configuration = CorsConfiguration().apply {
+            allowedOrigins = Arrays.asList("*")
+            allowedMethods = Arrays.asList("GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH")
+            allowedHeaders = Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization", "oauth_token", "x-xsrf-token")
+            allowCredentials = true
+        }
+        return UrlBasedCorsConfigurationSource().apply {
+            registerCorsConfiguration("/**", configuration)
+        }
     }
 }
 
@@ -90,6 +92,6 @@ class ClientResources {
 
 class CustomAuthenticationSuccessHandler : SimpleUrlAuthenticationSuccessHandler() {
     override fun onAuthenticationSuccess(request: HttpServletRequest, response: HttpServletResponse, authentication: Authentication) {
-        //nothing to do, status will be returned
+        response.status = HttpServletResponse.SC_OK
     }
 }

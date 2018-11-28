@@ -20,6 +20,6 @@ class UserResources(private val userService: UserService, private val eventServi
         val userId = authenticationDetails["id"] as String
 
         return userService.getUserById(userId)
-                .orElse(userService.saveUser(User(userId, authenticationDetails["name"] as String, this.eventService.findAll())))
+                .orElse(userService.saveUser(User(userId, authenticationDetails["name"] as String, Collections.emptyList())))
     }
 }

@@ -65,10 +65,12 @@ export class NewEventInputsComponent implements OnDestroy {
     this.eventSubscription = this.eventService.addNewEvent(event).subscribe(
       () => {
         this.eventService.notifyAboutNewEvent(event);
+        this.authService.getLoggedUser().events.push(event);
+        this.newEventForm.get('title').setValue("");
       },
       error => {
         console.error("Cannot create new event", error);
       }
-    )
+    );
   }
 }
