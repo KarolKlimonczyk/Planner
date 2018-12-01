@@ -12,7 +12,7 @@ class EventResources(private val eventService: EventService) {
     fun getEvent(@PathVariable id: Long) = this.eventService.findById(id)
 
     @PostMapping(value = ["/add"])
-    fun addEvent(@RequestBody @Valid event: Event): ResponseEntity<Unit> {
+    fun addEvent(@RequestBody @Valid event: EventDto): ResponseEntity<Unit> {
         this.eventService.save(event)
         return ResponseEntity.ok().build()
     }

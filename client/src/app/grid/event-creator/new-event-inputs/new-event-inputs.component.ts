@@ -13,7 +13,7 @@ import {Subscription} from "rxjs/index";
 export class NewEventInputsComponent implements OnDestroy {
 
   private newEventForm: FormGroup;
-  private color = "#2889e9";
+  private color = "#ad0100";
   private options = {
     format: "DD.MM.YYYY hh:mm",
   };
@@ -62,7 +62,17 @@ export class NewEventInputsComponent implements OnDestroy {
       this.newEventForm.value.draggable
     );
 
-    this.eventSubscription = this.eventService.addNewEvent(event).subscribe(
+    let eventJson = JSON.stringify(event, function (key, value) {
+      if (key == 'users') {
+        return value.map(user => ({
+          id: user.id,
+          name: user.name
+        }));
+      }
+      return value;
+    });
+
+    this.eventSubscription = this.eventService.addNewEvent(eventJson).subscribe(
       () => {
         this.eventService.notifyAboutNewEvent(event);
         this.authService.getLoggedUser().events.push(event);

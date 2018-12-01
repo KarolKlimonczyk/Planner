@@ -10,7 +10,7 @@ const httpOptions = {
   })
 };
 
-const EVENT_API = "/api/event/";
+const EVENT_API = "/api/event";
 
 @Injectable()
 export class EventService {
@@ -32,12 +32,8 @@ export class EventService {
     this.dayViewChange.next(date);
   }
 
-  public getEventById(id: number): Observable<Event> {
-    return this.http.get<Event>(EVENT_API + id);
-  }
-
-  public addNewEvent(event: Event): Observable<any> {
-    return this.http.post(EVENT_API + "add", event, httpOptions);
+  public addNewEvent(event): Observable<any> {
+    return this.http.post(`${EVENT_API}/add`, event, httpOptions);
   }
 
   public mapEventToCalendarEvent(event: Event): CalendarEvent {

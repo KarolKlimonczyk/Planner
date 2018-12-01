@@ -11,7 +11,7 @@ data class Event(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id")
-        val id: Long,
+        val id: Long? = null,
 
         @Column(name = "title")
         @Size(max = 300)

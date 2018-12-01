@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service
 @Service
 class EventService(private val eventRepository: EventRepository) {
 
-    fun save(event: Event) = this.eventRepository.save(event)
+    fun save(eventDto: EventDto) = this.eventRepository.save(eventDto.toEvent())
 
     fun findById(id: Long) = this.eventRepository.findById(id)
 
