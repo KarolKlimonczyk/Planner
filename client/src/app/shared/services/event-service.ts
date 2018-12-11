@@ -3,6 +3,7 @@ import {Observable, Subject} from "rxjs/index";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Event} from "../models/event";
 import {CalendarEvent} from "angular-calendar";
+import {map} from "rxjs/internal/operators";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -36,7 +37,19 @@ export class EventService {
     return this.http.post(`${EVENT_API}/add`, event, httpOptions);
   }
 
-  public mapEventToCalendarEvent(event: Event): CalendarEvent {
+  public getUserEvents(): Observable<any> {
+    const self = this;
+    return this.http.get(`${EVENT_API}/all`, httpOptions).pipe(
+      map((events: Array<Event>) =>
+        events.map((event: Event) => {
+            return self.mapEventToCalendarEvent(event);
+          }
+        )
+      )
+    )
+  }
+
+  public mapEventToCalendarEvent(event: Event): CalendarEvent<any> {
     return {
       title: event.title,
       color: {primary: event.color, secondary: event.color},

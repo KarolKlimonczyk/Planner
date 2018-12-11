@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Observable} from "rxjs";
+import {CalendarEvent} from "angular-calendar";
+import {EventService} from "../../shared/services/event-service";
 
 @Component({
   selector: 'app-schedule-grid',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ScheduleGridComponent implements OnInit {
 
-  constructor() { }
+  view: string = 'month';
+  viewDate: Date = new Date();
+  events$: Observable<Array<CalendarEvent<{ film: any }>>>;
 
-  ngOnInit() {
+  activeDayIsOpen: boolean = false;
+
+  constructor(private eventService: EventService) {
   }
 
+  ngOnInit(): void {
+    this.events$ = this.eventService.getUserEvents();
+  }
 }

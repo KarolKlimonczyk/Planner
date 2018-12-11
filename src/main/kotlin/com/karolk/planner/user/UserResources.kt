@@ -1,6 +1,5 @@
 package com.karolk.planner.user
 
-import com.karolk.planner.event.EventService
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.oauth2.provider.OAuth2Authentication
 import org.springframework.web.bind.annotation.GetMapping
@@ -11,7 +10,7 @@ import java.util.*
 
 @RestController
 @RequestMapping("/api/user")
-class UserResources(private val userService: UserService, private val eventService: EventService) {
+class UserResources(private val userService: UserService) {
 
     @GetMapping("/logged")
     fun getLoggedUser(principal: Principal): User {
@@ -19,7 +18,11 @@ class UserResources(private val userService: UserService, private val eventServi
         val authenticationDetails = ((authentication as OAuth2Authentication).userAuthentication.details) as HashMap<*, *>
         val userId = authenticationDetails["id"] as String
 
-        return userService.getUserById(userId)
-                .orElse(userService.saveUser(User(userId, authenticationDetails["name"] as String, Collections.emptyList())))
+        val user = userService.getUserById(userId)
+
+        if (user != null) {
+            return user
+        }
+        return userService.saveUser(User(userId, authenticationDetails["name"] as String, Collections.emptyList()))
     }
 }
