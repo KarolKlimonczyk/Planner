@@ -14,7 +14,8 @@ class EventResources(private val eventService: EventService, private val userSer
     fun getEvent(@PathVariable id: Long) = this.eventService.findById(id)
 
     @GetMapping(value = ["/all"])
-    fun getAllUserEvents(principal: Principal) = this.userService.getUserById(principal.name)?.events?.let { ResponseEntity.ok(it) }
+    fun getAllUserEvents(principal: Principal) = this.userService.getUserById(principal.name)?.events?.map(Event::toEventDto)
+
 
     @PostMapping(value = ["/add"])
     fun addEvent(@RequestBody @Valid event: EventDto): ResponseEntity<Unit> {

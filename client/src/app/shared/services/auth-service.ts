@@ -53,6 +53,6 @@ export class AuthService {
   public saveUserAndRedirectToHome(user: User) {
     this.loggedUser = user;
     sessionStorage.setItem("userName", user.name);
-    this.router.navigate(['/']);
+    this.router.navigate(['/schedule']);
   }
 }

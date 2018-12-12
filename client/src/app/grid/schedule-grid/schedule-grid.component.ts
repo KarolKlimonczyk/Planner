@@ -12,8 +12,7 @@ export class ScheduleGridComponent implements OnInit {
 
   view: string = 'month';
   viewDate: Date = new Date();
-  events$: Observable<Array<CalendarEvent<{ film: any }>>>;
-
+  events$: Observable<Array<CalendarEvent<any>>>;
   activeDayIsOpen: boolean = false;
 
   constructor(private eventService: EventService) {

@@ -2,6 +2,7 @@ package com.karolk.planner.event
 
 import com.fasterxml.jackson.annotation.JsonBackReference
 import com.karolk.planner.user.User
+import com.karolk.planner.user.toUserDtoWithoutEvents
 import java.time.LocalDateTime
 import javax.persistence.*
 import javax.validation.constraints.Size
@@ -40,4 +41,14 @@ data class Event(
 
         @Column(name = "draggable")
         val draggable: Boolean
+)
+
+fun Event.toEventDto() = Event(
+        title = this.title,
+        start = this.start,
+        end = this.end,
+        users = this.users.map(User::toUserDtoWithoutEvents),
+        color = this.color,
+        allDay = this.allDay,
+        draggable = this.draggable
 )

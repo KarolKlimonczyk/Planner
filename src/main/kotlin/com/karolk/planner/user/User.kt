@@ -19,3 +19,8 @@ data class User(
         @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
         val events: List<Event> = Collections.emptyList()
 )
+
+fun User.toUserDtoWithoutEvents() = User(
+        id = this.id,
+        name = this.name
+)
