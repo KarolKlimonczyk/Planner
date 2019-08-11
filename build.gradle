@@ -55,3 +55,23 @@ dependencies {
     runtime('com.h2database:h2')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+task npmInstall(type: Exec) {
+    workingDir 'client'
+    commandLine "npm.cmd", "install"
+}
+
+task buildFrontend (type: Exec){
+    workingDir 'client'
+    commandLine "npm.cmd", "run", "build", "--prod"
+}
+
+processResources {
+    from('client/dist/client/') {
+        into 'static'
+    }
+}
+
+buildFrontend.dependsOn npmInstall
+processResources.dependsOn buildFrontend
+build.dependsOn processResources
