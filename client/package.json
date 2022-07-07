@@ -27,7 +27,7 @@
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "ngx-color-picker": "^7.0.1",
     "ngx-tempusdominus-bootstrap": "^1.0.0",
     "rxjs": "^6.0.0",
