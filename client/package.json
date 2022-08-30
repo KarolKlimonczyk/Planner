@@ -32,7 +32,7 @@
     "ngx-tempusdominus-bootstrap": "^1.0.0",
     "rxjs": "^6.0.0",
     "tempusdominus-bootstrap-4": "^5.0.1",
-    "tempusdominus-core": "^5.0.0",
+    "tempusdominus-core": "^5.19.3",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
